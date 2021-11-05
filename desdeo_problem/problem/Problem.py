@@ -33,7 +33,7 @@ from desdeo_problem.problem.Objective import (
     ScalarDataObjective,
 )
 from desdeo_problem.surrogatemodels.SurrogateModels import BaseRegressor
-from desdeo_problem.problem.Variable import Variable
+from desdeo_problem.problem.Variable import Variable, IntegerVariable
 
 
 class ProblemError(Exception):
@@ -249,7 +249,7 @@ class ScalarMOProblem(ProblemBase):
     def __init__(
         self,
         objectives: List[ScalarObjective],
-        variables: List[Variable],
+        variables: List[Union[Variable, IntegerVariable]],
         constraints: List[ScalarConstraint],
         nadir: Optional[np.ndarray] = None,
         ideal: Optional[np.ndarray] = None,
