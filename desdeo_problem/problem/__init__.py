@@ -34,10 +34,12 @@ __all__ = [
     "variable_builder",
     "DiscreteDataProblem",
     "classificationPISProblem",
+    "IntegerVariable",
 ]
 
 from desdeo_problem.problem.Variable import (
     Variable,
+    IntegerVariable,
     VariableBuilderError,
     VariableError,
     variable_builder,

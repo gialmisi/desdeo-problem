@@ -29,6 +29,63 @@ class VariableBuilderError(Exception):
     pass
 
 
+class IntegerVariable:
+    """An integer variable with initial and value and bounds.
+
+    Arguments:
+        name (str): Name of the variable
+        initial_value (int): The initial value of the variable.
+        lower_bound (Union[int, float], optional): Lower bound of the variable. Defaults
+            to negative infinity. If infinity, bound is treated as the special float value '-inf'.
+        upper_bound (Union[int, float], optional): Upper bound of the variable. Defaults
+            to positive infinity. If infinity, bound is treated as the special float 'inf'.
+
+    Attributes:
+        name (str): Name of the variable.
+        initial_value (int): Initial value of the variable.
+        lower_bound (Union[int, float]): Lower bound of the variable. Only a float when value set as '-inf'.
+        upper_bound (float): Upper bound of the variable. Only a float when value sed as 'inf'.
+        current_value (float): The current value the variable holds.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        initial_value: int,
+        lower_bound: Union[int, float] = -float("inf"),
+        upper_bound: Union[int, float] = float("inf"),
+    ):
+        # check type of initial_value
+        if not isinstance(initial_value, int):
+            msg = f"Given initial value {initial_value} must be of type 'int'."
+            raise VariableError(msg)
+
+        if not (lower_bound < upper_bound):
+            msg = f"Given lower bound {lower_bound} must be less than upper bound {upper_bound}"
+            raise VariableError(msg)
+
+        # check that bounds are not float when not inf
+        if isinstance(lower_bound, float):
+            if lower_bound != float("-inf"):
+                msg = f"Given lower bound {lower_bound} must be of type int unless its value if '-inf'"
+                raise VariableError(msg)
+
+        if isinstance(upper_bound, float):
+            if upper_bound != float("inf"):
+                msg = f"Given upper bound {upper_bound} must be of type int unless its value if 'inf'"
+                raise VariableError(msg)
+
+        if not (lower_bound <= initial_value <= upper_bound):
+            msg = f"Given initial value {initial_value} must be between lower bound {lower_bound} and upper bound {upper_bound}"
+            raise VariableError(msg)
+
+        self.name = name
+        self.initial_value = initial_value
+        self.lower_bound = lower_bound
+        self.upper_bound = upper_bound
+        self.current_value = initial_value
+
+
 class Variable:
     """Simple variable with a name, initial value and bounds.
 
