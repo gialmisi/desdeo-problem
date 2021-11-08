@@ -59,3 +59,23 @@ class TestIntegerVariable:
             var = IntegerVariable("name", initial_value, lower_bound=lower_bound, upper_bound=upper_bound)
 
         assert "must be less than" in str(err.value)
+
+    def test_get_bounds(self):
+        """Test that bounds are returned properly
+        """
+        lower_bound = 42
+        upper_bound = 101
+        initial_value = 82
+
+        var = IntegerVariable("name", initial_value, lower_bound, upper_bound)
+
+        assert var.get_bounds() == (lower_bound, upper_bound)
+
+    def test_get_default(self):
+        """Test that default bounds are returned correctly.
+        """
+        initial_value = 82
+
+        var = IntegerVariable("name", initial_value)
+
+        assert var.get_bounds() == (float("-inf"), float("inf"))

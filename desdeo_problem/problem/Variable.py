@@ -85,6 +85,16 @@ class IntegerVariable:
         self.upper_bound = upper_bound
         self.current_value = initial_value
 
+    def get_bounds(self) -> Tuple[int, int]:
+        """Return the bounds of the variables as a tuple.
+
+        Returns:
+            tuple(float, float): A tuple consisting of (lower_bound,
+                upper_bound)
+
+        """
+        return (self.lower_bound, self.upper_bound)
+
 
 class Variable:
     """Simple variable with a name, initial value and bounds.
